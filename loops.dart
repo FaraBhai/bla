@@ -14,9 +14,11 @@ void main(){
     {'name':'ken','age':34,'address':'nyc'},
     {'name':'peter','age':45,'address':'quohog'},
   ];
+  int totalage=0;
 
   print(orderlist);
- for(dynamic i in orderlist){
+ for(var i in orderlist){
+  totalage=totalage+(i['age'] as int);
   print(i['name']);
  }
 }

@@ -9,8 +9,12 @@ var calarea=(double length, double width)=>(length*width);
   }
 else
   print('location:$location');
-
-
+}
+//default value
+ calculateareaa(double length, double width,{String location='dhaka'}){
+  double area=length*width;
+  print('area:$area');
+  print('location:$location');
 }
 void main(){
   print('Area:${calarea(20.5,20.5)}');
