@@ -1,3 +1,5 @@
+import 'dart:io';
+
 abstract class Role{
   void displayRole(){}
 }
@@ -12,22 +14,24 @@ class Person implements Role{
 }
 class Student extends Person{
   String StudentId;
-  String Grade;
   List courses;
   List scores;
-  Student(super.name,super.address,super.age,this.StudentId,this.Grade,this.courses,this.scores);
+  Student(super.name,super.address,super.age,this.StudentId,this.courses,this.scores);
   void displayRole(){
     print('Role:Student');
   }
-  double totalScore=0;
-  void AverageScore(scores){
+  
+  double AverageScore(){
+    double totalScore=0;
     for(var i in  scores){
       totalScore+=i;
     }
     double average=totalScore/courses.length;
-    print('Average Score: $average');
+    return average;
 
   }
+
+  String get Grade => AverageScore()>=80?'A+':(AverageScore()>=40?'pass':'F');
 }
  class Teacher extends Person{
   String TeacherId;
@@ -45,24 +49,32 @@ class Student extends Person{
  }
 
 void main(){
-  List courses=['math','english','bangla'];
-  List scores=[90,85,82];
+  print('Enter your name:');
+  String name=stdin.readLineSync()!;
+  print('Enter your address:');
+  String address=stdin.readLineSync()!;
+  print('Enter your age:');
+  int age=int.parse(stdin.readLineSync()!);
+  print('Enter your student ID:');
+  String StudentId=stdin.readLineSync()!;
+  print('How many courses do you want to enter? ');
+  int courseCount = int.parse(stdin.readLineSync()!);
+  List courses=[];
+  List scores=[];
+  print('Enter your courses:');
+  for(int i=0;i<courseCount;i++){
+    print('Enter your course:');
+    courses.add(stdin.readLineSync()!);
+    print('Enter the markof that following course:');
+    scores.add(double.parse(stdin.readLineSync()!));
 
-  var students=Student('John Doe', '123 Main St', 20, '08063', 'A', courses, scores);
-  print('Name:${students.name}');
-   print('Age:${students.age}');
-    print('Address:${students.address}');
-  students.displayRole();
-  students.AverageScore(scores);
-  var CoursesTaught=['Math','English','Bnagla'];
+  }
+      var students=Student(name, address, age, StudentId, courses, scores);
+      students.displayRole();
+      print('Final Grade:${students.Grade}');
 
-  var teacher=Teacher('Mrs. Smith', '456 Oak St', 35, '78676u86', CoursesTaught);
-  teacher.displayRole();
-    print('Name:${teacher.name}');
-   print('Age:${teacher.age}');
-    print('Address:${teacher.address}');
-    teacher.displayCourse(CoursesTaught);
-    
+  
 
 
+  
 }
